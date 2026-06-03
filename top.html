@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderTop() {
     const list = document.getElementById('topList');
     list.innerHTML = '';
-    let data = [...MOVIES].sort((a, b) => b.rating - a.rating);
+    let data = [...getMovies()].sort((a, b) => b.rating - a.rating);
     if (activeFilter !== 'all') data = data.filter(m => m.type === activeFilter);
 
     data.forEach((m, i) => {

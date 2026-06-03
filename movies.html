@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const qual  = document.getElementById('filterQuality').value;
     const sort  = document.querySelector('.sort-btn.active')?.dataset.sort || 'new';
 
-    filtered = MOVIES.filter(m => m.type === 'movie');
+    filtered = getMovies().filter(m => m.type === 'movie');
     if (genre !== 'all') filtered = filtered.filter(m => m.genre === genre);
     if (qual  !== 'all') filtered = filtered.filter(m => m.quality === qual);
     if (year  !== 'all') {

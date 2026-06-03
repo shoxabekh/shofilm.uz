@@ -154,17 +154,34 @@ let currentMovie = null;
 
 function getParam(n) { return new URLSearchParams(location.search).get(n); }
 
+// localStorage dan filmlarni olish (main.js dagi getMovies() bilan bir xil)
+function getAllMovies() { return getMovies(); }
+
 function startPlayer() {
   if (!currentMovie) return;
-  const trailers = {
+  const container = document.getElementById('playerContainer');
+  const vid = currentMovie.videoId || '';
+
+  // Agar mp4 yoki bevosita video link bo'lsa
+  if (vid.startsWith('http') && (vid.includes('.mp4') || vid.includes('.m3u8') || vid.includes('.webm'))) {
+    container.innerHTML = `
+      <video controls autoplay style="width:100%;height:100%;background:#000">
+        <source src="${vid}" type="video/mp4"/>
+        Brauzering video ni qo'llab-quvvatlamaydi.
+      </video>`;
+    return;
+  }
+
+  // YouTube ID bo'lsa yoki default trailerlar
+  const defaultTrailers = {
     1:'TcMBFSGVi1c', 2:'zSWdZVtXT7E', 3:'EXeTwQWrcwY',
     4:'YoHD9XEInc0', 5:'JfVOs4VSpmA', 6:'zAGVQLHvwOY',
     7:'5xH0HfJHsaY', 8:'HhesaQXLuRY', 9:'bjqEWgDVPe0',
     10:'7V-PNgHVBn4',11:'GibiNy4d4gc',12:'ue4h2J9iNWI'
   };
-  const ytId = trailers[currentMovie.id] || 'dQw4w9WgXcQ';
-  document.getElementById('playerContainer').innerHTML =
-    `<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0"
+  const ytId = vid || defaultTrailers[currentMovie.id] || 'dQw4w9WgXcQ';
+  container.innerHTML = `
+    <iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0"
       allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
       allowfullscreen></iframe>`;
 }
@@ -198,7 +215,8 @@ document.getElementById('favBtn').addEventListener('click', function () {
 
 document.addEventListener('DOMContentLoaded', () => {
   const id = parseInt(getParam('id')) || 1;
-  currentMovie = MOVIES.find(m => m.id === id) || MOVIES[0];
+  const ALL = getAllMovies();
+  currentMovie = ALL.find(m => m.id === id) || ALL[0];
   const m = currentMovie;
 
   document.getElementById('pageTitle').textContent = m.title + ' — ShoFilm.uz';
@@ -256,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Related films
   const relGrid = document.getElementById('relatedGrid');
-  MOVIES.filter(r => r.genre === m.genre && r.id !== m.id).slice(0, 6).forEach(r => {
+  getAllMovies().filter(r => r.genre === m.genre && r.id !== m.id).slice(0, 6).forEach(r => {
     const card = buildCard(r);
     card.onclick = () => location.href = `player.html?id=${r.id}`;
     relGrid.appendChild(card);

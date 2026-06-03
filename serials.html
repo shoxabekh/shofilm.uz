@@ -77,7 +77,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const grid = document.getElementById('serialsPageGrid');
-  MOVIES.filter(m => m.type === 'serial').forEach(m => grid.appendChild(buildCard(m)));
+  getMovies().filter(m => m.type === 'serial').forEach(m => grid.appendChild(buildCard(m)));
 });
 </script>
 </body>
