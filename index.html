@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="ShoFilm.uz — O'zbekistondagi eng yaxshi filmlar, seriallar va multfilmlar platformasi"/>
+  <title>ShoFilm.uz — Filmlar, Seriallar, Multfilmlar</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="index.html" class="logo">
+      <span class="logo-sho">Sho</span><span class="logo-film">Film</span><span class="logo-dot">.uz</span>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="index.html"   class="nav__link active">Bosh sahifa</a>
+      <a href="movies.html"  class="nav__link">Filmlar</a>
+      <a href="serials.html" class="nav__link">Seriallar</a>
+      <a href="cartoons.html"class="nav__link">Multfilmlar</a>
+      <a href="top.html"     class="nav__link">Top 100</a>
+    </nav>
+    <div class="header__right">
+      <button class="search-btn" id="searchToggle"><i class="fas fa-search"></i></button>
+      <button class="btn-login"><i class="fas fa-user"></i> Kirish</button>
+      <button class="burger" id="burger"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+  <div class="search-bar" id="searchBar">
+    <div class="container">
+      <input type="text" id="searchInput" class="search-input" placeholder="Film, serial yoki aktyor qidiring..."/>
+      <button class="search-close" id="searchClose"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</header>
+
+<!-- ===== HERO SLIDER ===== -->
+<section class="hero">
+  <div class="hero__slides">
+
+    <div class="hero__slide active" style="background-image:url('https://image.tmdb.org/t/p/original/628Dep6AxEtDxjZoGP78TsOxYbK.jpg')">
+      <div class="hero__overlay"></div>
+      <div class="container hero__content">
+        <span class="hero__badge">HD</span>
+        <h1 class="hero__title">Avengers: Endgame</h1>
+        <div class="hero__meta">
+          <span><i class="fas fa-star"></i> 8.4</span>
+          <span><i class="fas fa-calendar"></i> 2019</span>
+          <span><i class="fas fa-film"></i> Боевик / Fantastika</span>
+          <span><i class="fas fa-clock"></i> 3s 1d</span>
+        </div>
+        <p class="hero__desc">Avengers jamoasi Thanos ustidan g'alaba qozonish uchun oxirgi marta birlashadi. Koinotdagi yarmi yo'q qilingan mavjudotlarni qaytarish uchun ular barcha kuchlarini safarbar etadilar.</p>
+        <div class="hero__btns">
+          <a href="player.html?id=1" class="btn btn-primary"><i class="fas fa-play"></i> Ko'rish</a>
+          <button class="btn btn-secondary"><i class="fas fa-plus"></i> Keyinroq</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__slide" style="background-image:url('https://image.tmdb.org/t/p/original/8Y43POKjjKDGI9MH89NW0NAzzp8.jpg')">
+      <div class="hero__overlay"></div>
+      <div class="container hero__content">
+        <span class="hero__badge">UHD</span>
+        <h1 class="hero__title">Interstellar</h1>
+        <div class="hero__meta">
+          <span><i class="fas fa-star"></i> 8.6</span>
+          <span><i class="fas fa-calendar"></i> 2014</span>
+          <span><i class="fas fa-film"></i> Ilmiy-fantastika</span>
+          <span><i class="fas fa-clock"></i> 2s 49d</span>
+        </div>
+        <p class="hero__desc">Insoniyatni saqlab qolish uchun bir guruh astronavtlar yulduzlaro'ti orqali sayohat qiladi. Vaqt va makon chegaralarini yengib, yangi dunyo izlaydilar.</p>
+        <div class="hero__btns">
+          <a href="player.html?id=2" class="btn btn-primary"><i class="fas fa-play"></i> Ko'rish</a>
+          <button class="btn btn-secondary"><i class="fas fa-plus"></i> Keyinroq</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__slide" style="background-image:url('https://image.tmdb.org/t/p/original/oqP1qEZccq5AD9MxJDjVSmOHH9E.jpg')">
+      <div class="hero__overlay"></div>
+      <div class="container hero__content">
+        <span class="hero__badge">HD</span>
+        <h1 class="hero__title">The Dark Knight</h1>
+        <div class="hero__meta">
+          <span><i class="fas fa-star"></i> 9.0</span>
+          <span><i class="fas fa-calendar"></i> 2008</span>
+          <span><i class="fas fa-film"></i> Боевик / Triller</span>
+          <span><i class="fas fa-clock"></i> 2s 32d</span>
+        </div>
+        <p class="hero__desc">Batman Gotham shahrini Joker deb atalgan terrorchidan himoya qilishi kerak. Bu kurash nafaqat jismoniy, balki ruhiy sinov ham bo'ladi.</p>
+        <div class="hero__btns">
+          <a href="player.html?id=3" class="btn btn-primary"><i class="fas fa-play"></i> Ko'rish</a>
+          <button class="btn btn-secondary"><i class="fas fa-plus"></i> Keyinroq</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <button class="hero__arrow hero__arrow--prev" id="heroPrev"><i class="fas fa-chevron-left"></i></button>
+  <button class="hero__arrow hero__arrow--next" id="heroNext"><i class="fas fa-chevron-right"></i></button>
+  <div class="hero__dots">
+    <span class="hero__dot active"></span>
+    <span class="hero__dot"></span>
+    <span class="hero__dot"></span>
+  </div>
+</section>
+
+<!-- ===== KATEGORIYALAR ===== -->
+<section class="categories section">
+  <div class="container">
+    <div class="categories__list">
+      <button class="cat-btn active" data-cat="all">Barchasi</button>
+      <button class="cat-btn" data-cat="action">Боевик</button>
+      <button class="cat-btn" data-cat="drama">Drama</button>
+      <button class="cat-btn" data-cat="fantasy">Fantastika</button>
+      <button class="cat-btn" data-cat="cartoon">Multfilm</button>
+      <button class="cat-btn" data-cat="serial">Serial</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== YANGI FILMLAR ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-fire"></i> Yangi qo'shilganlar</h2>
+      <a href="movies.html" class="see-all">Barchasi <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="movies-grid" id="newMoviesGrid"></div>
+  </div>
+</section>
+
+<!-- ===== TOP FILMLAR ===== -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-trophy"></i> Top filmlar</h2>
+      <a href="top.html" class="see-all">Barchasi <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="movies-grid" id="topMoviesGrid"></div>
+  </div>
+</section>
+
+<!-- ===== SERIALLAR ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-tv"></i> Mashhur seriallar</h2>
+      <a href="serials.html" class="see-all">Barchasi <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="movies-grid" id="serialsGrid"></div>
+  </div>
+</section>
+
+<!-- ===== MULTFILMLAR ===== -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-dragon"></i> Multfilmlar</h2>
+      <a href="cartoons.html" class="see-all">Barchasi <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="movies-grid" id="cartoonsGrid"></div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__logo">
+      <a href="index.html" class="logo">
+        <span class="logo-sho">Sho</span><span class="logo-film">Film</span><span class="logo-dot">.uz</span>
+      </a>
+      <p>O'zbekistondagi eng yaxshi film ko'rish platformasi</p>
+    </div>
+    <div class="footer__links">
+      <h4>Bo'limlar</h4>
+      <a href="movies.html">Filmlar</a>
+      <a href="serials.html">Seriallar</a>
+      <a href="cartoons.html">Multfilmlar</a>
+      <a href="top.html">Top 100</a>
+    </div>
+    <div class="footer__links">
+      <h4>Ma'lumot</h4>
+      <a href="#">Biz haqimizda</a>
+      <a href="#">Bog'lanish</a>
+      <a href="#">Qoidalar</a>
+      <a href="#">Maxfiylik</a>
+    </div>
+    <div class="footer__social">
+      <h4>Ijtimoiy tarmoqlar</h4>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-telegram"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-facebook"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <p>© 2025 ShoFilm.uz — Barcha huquqlar himoyalangan</p>
+  </div>
+</footer>
+
+<!-- ===== MODAL ===== -->
+<div class="modal" id="movieModal">
+  <div class="modal__overlay" id="modalOverlay"></div>
+  <div class="modal__box">
+    <button class="modal__close" id="modalClose"><i class="fas fa-times"></i></button>
+    <div class="modal__poster">
+      <img src="" alt="" id="modalPoster"/>
+      <div class="modal__play-btn">
+        <a href="#" id="modalPlayLink" class="btn btn-primary btn-lg"><i class="fas fa-play"></i> Ko'rish</a>
+      </div>
+    </div>
+    <div class="modal__info">
+      <h2 id="modalTitle"></h2>
+      <div class="modal__meta" id="modalMeta"></div>
+      <p id="modalDesc"></p>
+      <div class="modal__actions">
+        <a href="#" id="modalWatchBtn" class="btn btn-primary"><i class="fas fa-play"></i> Ko'rish</a>
+        <button class="btn btn-secondary"><i class="fas fa-download"></i> Yuklab olish</button>
+        <button class="btn btn-icon"><i class="fas fa-heart"></i></button>
+        <button class="btn btn-icon"><i class="fas fa-share-alt"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="scroll-top" id="scrollTop"><i class="fas fa-chevron-up"></i></button>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

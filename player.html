@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="pageTitle">Ko'rish — ShoFilm.uz</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="index.html" class="logo"><span class="logo-sho">Sho</span><span class="logo-film">Film</span><span class="logo-dot">.uz</span></a>
+    <nav class="nav" id="nav">
+      <a href="index.html"   class="nav__link">Bosh sahifa</a>
+      <a href="movies.html"  class="nav__link">Filmlar</a>
+      <a href="serials.html" class="nav__link">Seriallar</a>
+      <a href="cartoons.html"class="nav__link">Multfilmlar</a>
+      <a href="top.html"     class="nav__link">Top 100</a>
+    </nav>
+    <div class="header__right">
+      <button class="search-btn" id="searchToggle"><i class="fas fa-search"></i></button>
+      <button class="btn-login"><i class="fas fa-user"></i> Kirish</button>
+      <button class="burger" id="burger"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+  <div class="search-bar" id="searchBar">
+    <div class="container">
+      <input type="text" id="searchInput" class="search-input" placeholder="Qidiring..."/>
+      <button class="search-close" id="searchClose"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</header>
+
+<div class="player-page">
+
+  <!-- BREADCRUMB -->
+  <div class="container" style="padding-top:16px">
+    <nav style="font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <a href="index.html" style="color:var(--muted);transition:var(--tr)" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Bosh sahifa</a>
+      <i class="fas fa-chevron-right" style="font-size:10px"></i>
+      <a id="breadType" href="movies.html" style="color:var(--muted);transition:var(--tr)" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Filmlar</a>
+      <i class="fas fa-chevron-right" style="font-size:10px"></i>
+      <span id="breadTitle" style="color:#fff">Film</span>
+    </nav>
+  </div>
+
+  <!-- PLAYER CONTROLS -->
+  <div class="player-wrapper">
+    <div class="player-topbar">
+      <div class="player-topbar-left">
+        <span style="font-size:13px;color:var(--muted)">Sifat:</span>
+        <button class="quality-btn active">UHD 4K</button>
+        <button class="quality-btn">HD 1080p</button>
+        <button class="quality-btn">HD 720p</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span style="font-size:13px;color:var(--muted)">Til:</span>
+        <button class="lang-btn active">O'zbek</button>
+        <button class="lang-btn">Rus</button>
+        <button class="lang-btn">Original</button>
+      </div>
+    </div>
+
+    <!-- PLAYER BOX -->
+    <div class="player-container" id="playerContainer">
+      <div class="player-placeholder" onclick="startPlayer()">
+        <div class="play-circle"><i class="fas fa-play"></i></div>
+        <div class="placeholder-title" id="placeholderTitle">Yuklanmoqda...</div>
+        <div class="placeholder-sub">Ko'rishni boshlash uchun bosing</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILM INFO -->
+  <div class="player-info">
+    <div style="display:flex;gap:24px;flex-wrap:wrap">
+      <img id="infoPoster" src="" alt=""
+        style="width:140px;height:200px;object-fit:cover;border-radius:var(--rl);flex-shrink:0;box-shadow:var(--sh)"/>
+      <div style="flex:1;min-width:260px">
+        <h1 id="infoTitle" style="font-size:clamp(20px,3vw,30px);font-weight:800;margin-bottom:8px"></h1>
+        <div id="infoMeta" class="player-meta"></div>
+        <p id="infoDesc" class="player-desc"></p>
+        <div class="player-actions">
+          <button class="btn btn-secondary" onclick="history.back()"><i class="fas fa-arrow-left"></i> Orqaga</button>
+          <button class="btn btn-secondary" id="favBtn"><i class="fas fa-heart"></i> Saqlash</button>
+          <button class="btn btn-secondary" onclick="shareFilm()"><i class="fas fa-share-alt"></i> Ulashish</button>
+          <button class="btn btn-secondary"><i class="fas fa-download"></i> Yuklab olish</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EPISODES (faqat serial uchun) -->
+  <div class="episodes-section" id="episodesSection" style="display:none">
+    <div class="episodes-title"><i class="fas fa-list" style="color:var(--accent)"></i> Qismlar</div>
+    <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap" id="seasonTabs"></div>
+    <div class="episodes-grid" id="episodesGrid"></div>
+  </div>
+
+  <!-- O'XSHASH FILMLAR -->
+  <div class="related-section">
+    <div class="section-header" style="margin-bottom:20px">
+      <h3 class="section-title"><i class="fas fa-film"></i> O'xshash filmlar</h3>
+    </div>
+    <div class="movies-grid" id="relatedGrid"></div>
+  </div>
+
+  <!-- IZOHLAR -->
+  <div style="max-width:1100px;margin:0 auto;padding:0 20px 60px">
+    <div class="section-header" style="margin-bottom:20px">
+      <h3 class="section-title"><i class="fas fa-comments"></i> Izohlar</h3>
+    </div>
+    <div style="background:var(--card);border-radius:var(--rl);padding:24px;border:1px solid var(--border)">
+      <textarea placeholder="Fikringizni yozing..."
+        style="width:100%;background:var(--bg2);border:1px solid var(--border);color:#fff;padding:14px;border-radius:var(--r);font-size:14px;resize:vertical;min-height:90px;outline:none;font-family:inherit"
+        onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+      <div style="display:flex;justify-content:flex-end;margin-top:10px">
+        <button class="btn btn-primary"><i class="fas fa-paper-plane"></i> Yuborish</button>
+      </div>
+      <div style="margin-top:24px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;gap:14px;padding-bottom:16px;border-bottom:1px solid var(--border)">
+          <div style="width:40px;height:40px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0">A</div>
+          <div><div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><strong>Alisher</strong><span style="font-size:12px;color:var(--muted)">2 soat oldin</span></div><p style="font-size:14px;color:var(--txt2)">Zo'r film, tavsiya qilaman! O'zbek tilida juda sifatli tarjima qilingan.</p></div>
+        </div>
+        <div style="display:flex;gap:14px">
+          <div style="width:40px;height:40px;background:#7b2ff7;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0">N</div>
+          <div><div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><strong>Nilufar</strong><span style="font-size:12px;color:var(--muted)">5 soat oldin</span></div><p style="font-size:14px;color:var(--txt2)">Ajoyib! Bir nafasda ko'rib chiqdim. ShoFilm.uz eng zo'r!</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /player-page -->
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__logo"><a href="index.html" class="logo"><span class="logo-sho">Sho</span><span class="logo-film">Film</span><span class="logo-dot">.uz</span></a><p>O'zbekistondagi eng yaxshi film ko'rish platformasi</p></div>
+    <div class="footer__links"><h4>Bo'limlar</h4><a href="movies.html">Filmlar</a><a href="serials.html">Seriallar</a><a href="cartoons.html">Multfilmlar</a><a href="top.html">Top 100</a></div>
+    <div class="footer__links"><h4>Ma'lumot</h4><a href="#">Biz haqimizda</a><a href="#">Bog'lanish</a></div>
+    <div class="footer__social"><h4>Ijtimoiy tarmoqlar</h4><div class="social-icons"><a href="#"><i class="fab fa-telegram"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-youtube"></i></a></div></div>
+  </div>
+  <div class="footer__bottom"><p>© 2025 ShoFilm.uz — Barcha huquqlar himoyalangan</p></div>
+</footer>
+
+<button class="scroll-top" id="scrollTop"><i class="fas fa-chevron-up"></i></button>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+<script>
+let currentMovie = null;
+
+function getParam(n) { return new URLSearchParams(location.search).get(n); }
+
+function startPlayer() {
+  if (!currentMovie) return;
+  const trailers = {
+    1:'TcMBFSGVi1c', 2:'zSWdZVtXT7E', 3:'EXeTwQWrcwY',
+    4:'YoHD9XEInc0', 5:'JfVOs4VSpmA', 6:'zAGVQLHvwOY',
+    7:'5xH0HfJHsaY', 8:'HhesaQXLuRY', 9:'bjqEWgDVPe0',
+    10:'7V-PNgHVBn4',11:'GibiNy4d4gc',12:'ue4h2J9iNWI'
+  };
+  const ytId = trailers[currentMovie.id] || 'dQw4w9WgXcQ';
+  document.getElementById('playerContainer').innerHTML =
+    `<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0"
+      allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
+      allowfullscreen></iframe>`;
+}
+
+function shareFilm() {
+  if (navigator.share && currentMovie) {
+    navigator.share({ title: currentMovie.title, url: location.href });
+  } else {
+    navigator.clipboard.writeText(location.href).then(() => alert('Havola nusxalandi!'));
+  }
+}
+
+// Quality & Lang buttons
+document.querySelectorAll('.quality-btn').forEach(b => b.addEventListener('click', function () {
+  document.querySelectorAll('.quality-btn').forEach(x => x.classList.remove('active'));
+  this.classList.add('active');
+}));
+document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', function () {
+  document.querySelectorAll('.lang-btn').forEach(x => x.classList.remove('active'));
+  this.classList.add('active');
+}));
+
+// Favourite
+let isFav = false;
+document.getElementById('favBtn').addEventListener('click', function () {
+  isFav = !isFav;
+  this.innerHTML = isFav
+    ? '<i class="fas fa-heart" style="color:var(--accent)"></i> Saqlandi'
+    : '<i class="fas fa-heart"></i> Saqlash';
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const id = parseInt(getParam('id')) || 1;
+  currentMovie = MOVIES.find(m => m.id === id) || MOVIES[0];
+  const m = currentMovie;
+
+  document.getElementById('pageTitle').textContent = m.title + ' — ShoFilm.uz';
+  document.getElementById('breadTitle').textContent = m.title;
+  document.getElementById('breadType').textContent = m.type === 'serial' ? 'Seriallar' : m.type === 'cartoon' ? 'Multfilmlar' : 'Filmlar';
+  document.getElementById('breadType').href = m.type === 'serial' ? 'serials.html' : m.type === 'cartoon' ? 'cartoons.html' : 'movies.html';
+  document.getElementById('placeholderTitle').textContent = m.title;
+
+  const poster = document.getElementById('infoPoster');
+  poster.src = m.poster; poster.alt = m.title;
+  poster.onerror = () => poster.src = 'https://placehold.co/140x200/1a1a1a/444?text=Film';
+
+  document.getElementById('infoTitle').textContent = m.title;
+  document.getElementById('infoMeta').innerHTML = `
+    <span><i class="fas fa-star"></i> ${m.rating}/10</span>
+    <span><i class="fas fa-calendar"></i> ${m.year}</span>
+    <span><i class="fas fa-film"></i> ${m.genreLabel}</span>
+    <span><i class="fas fa-clock"></i> ${m.duration}</span>
+    <span><i class="fas fa-globe"></i> ${m.language}</span>
+    <span><i class="fas fa-flag"></i> ${m.country}</span>
+    <span><i class="fas fa-eye"></i> ${m.views}</span>`;
+  document.getElementById('infoDesc').textContent = m.desc;
+
+  // Serial episodes
+  if (m.type === 'serial' && m.episodes) {
+    document.getElementById('episodesSection').style.display = 'block';
+    const seasons    = Math.ceil(m.episodes / 13);
+    const seasonTabs = document.getElementById('seasonTabs');
+    const epGrid     = document.getElementById('episodesGrid');
+
+    function loadSeason(s) {
+      seasonTabs.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.s == s));
+      epGrid.innerHTML = '';
+      for (let e = (s-1)*13+1; e <= Math.min(s*13, m.episodes); e++) {
+        const b = document.createElement('button');
+        b.className = 'episode-btn' + (e === 1 ? ' active' : '');
+        b.textContent = e;
+        b.addEventListener('click', function () {
+          document.querySelectorAll('.episode-btn').forEach(x => x.classList.remove('active'));
+          this.classList.add('active');
+          startPlayer();
+        });
+        epGrid.appendChild(b);
+      }
+    }
+    for (let s = 1; s <= seasons; s++) {
+      const b = document.createElement('button');
+      b.className = 'sort-btn' + (s === 1 ? ' active' : '');
+      b.textContent = `${s}-mavsum`; b.dataset.s = s;
+      b.addEventListener('click', () => loadSeason(s));
+      seasonTabs.appendChild(b);
+    }
+    loadSeason(1);
+  }
+
+  // Related films
+  const relGrid = document.getElementById('relatedGrid');
+  MOVIES.filter(r => r.genre === m.genre && r.id !== m.id).slice(0, 6).forEach(r => {
+    const card = buildCard(r);
+    card.onclick = () => location.href = `player.html?id=${r.id}`;
+    relGrid.appendChild(card);
+  });
+});
+</script>
+</body>
+</html>
