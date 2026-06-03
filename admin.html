@@ -45,7 +45,7 @@
         <i class="fas fa-sign-in-alt"></i> Kirish
       </button>
     </div>
-    <p style="text-align:center;margin-top:20px;font-size:12px;color:var(--muted)">Default: admin / admin123</p>
+    <p style="text-align:center;margin-top:20px;font-size:12px;color:var(--muted)">Birinchi kirish: admin / admin123</p>
   </div>
 </div>
 
@@ -63,6 +63,7 @@
       <button class="sb-btn active" onclick="showPage('dashboard')"><i class="fas fa-chart-bar"></i> Dashboard</button>
       <button class="sb-btn" onclick="showPage('movies')"><i class="fas fa-film"></i> Filmlar</button>
       <button class="sb-btn" onclick="showPage('add')"><i class="fas fa-plus-circle"></i> Film qo'shish</button>
+      <button class="sb-btn" onclick="showPage('settings')"><i class="fas fa-cog"></i> Sozlamalar</button>
     </nav>
     <div style="padding:16px;border-top:1px solid var(--border)">
       <a href="index.html" target="_blank" style="display:flex;align-items:center;gap:8px;color:var(--txt2);font-size:13px;padding:10px;border-radius:var(--r);transition:var(--tr)" onmouseover="this.style.background='var(--hover)'" onmouseout="this.style.background='none'"><i class="fas fa-external-link-alt"></i> Saytni ko'rish</a>
@@ -234,6 +235,74 @@
         </div>
       </div>
 
+      <!-- SETTINGS PAGE -->
+      <div id="page-settings" style="display:none">
+        <div style="max-width:520px;display:flex;flex-direction:column;gap:20px">
+
+          <!-- LOGIN/PAROL O'ZGARTIRISH -->
+          <div style="background:var(--card);border-radius:var(--rl);border:1px solid var(--border);padding:28px">
+            <h3 style="font-size:16px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:10px">
+              <i class="fas fa-key" style="color:var(--accent)"></i> Login va parolni o'zgartirish
+            </h3>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div>
+                <label class="lbl">Yangi login</label>
+                <input id="cp-user" type="text" class="inp" placeholder="Yangi login kiriting"/>
+              </div>
+              <div>
+                <label class="lbl">Eski parol *</label>
+                <input id="cp-old" type="password" class="inp" placeholder="Hozirgi parolingiz"/>
+              </div>
+              <div>
+                <label class="lbl">Yangi parol *</label>
+                <input id="cp-new" type="password" class="inp" placeholder="Kamida 4 ta belgi"/>
+              </div>
+              <div>
+                <label class="lbl">Yangi parolni takrorlang *</label>
+                <input id="cp-new2" type="password" class="inp" placeholder="Parolni qayta kiriting"/>
+              </div>
+              <button onclick="changePassword()" style="background:var(--accent);color:#fff;padding:12px;border-radius:var(--r);font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px">
+                <i class="fas fa-save"></i> Saqlash
+              </button>
+            </div>
+          </div>
+
+          <!-- HOZIRGI KIRISH MA'LUMOTLARI -->
+          <div style="background:var(--card);border-radius:var(--rl);border:1px solid var(--border);padding:28px">
+            <h3 style="font-size:16px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px">
+              <i class="fas fa-info-circle" style="color:var(--gold)"></i> Hozirgi kirish ma'lumotlari
+            </h3>
+            <div style="background:var(--bg2);border-radius:var(--r);padding:16px;font-size:13px;color:var(--txt2);line-height:2">
+              <div><b style="color:#fff">Login:</b> <span id="show-user" style="color:var(--gold)"></span></div>
+              <div><b style="color:#fff">Parol:</b> <span style="color:var(--muted)">••••••• (yashirin)</span></div>
+              <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);color:var(--muted);font-size:12px">
+                <i class="fas fa-exclamation-triangle" style="color:var(--gold)"></i>
+                Login/parol faqat <b style="color:#fff">shu brauzerda</b> saqlanadi.<br>
+                Boshqa qurilmada ham ishlashi uchun — parolni o'sha qurilmada bir marta kiriting, keyin o'zgartiriladi.
+              </div>
+            </div>
+          </div>
+
+          <!-- MA'LUMOTLARNI EKSPORT/IMPORT -->
+          <div style="background:var(--card);border-radius:var(--rl);border:1px solid var(--border);padding:28px">
+            <h3 style="font-size:16px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px">
+              <i class="fas fa-database" style="color:#7b2ff7"></i> Ma'lumotlarni saqlash / yuklash
+            </h3>
+            <p style="font-size:13px;color:var(--txt2);margin-bottom:16px">Filmlar ro'yxatini JSON faylga saqlang va boshqa qurilmada yuklang.</p>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <button onclick="exportData()" style="background:#1a3a6f;color:#7ab3ff;padding:10px 20px;border-radius:var(--r);font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px">
+                <i class="fas fa-download"></i> Eksport (JSON)
+              </button>
+              <label style="background:#1a3a1a;color:#7aff7a;padding:10px 20px;border-radius:var(--r);font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer">
+                <i class="fas fa-upload"></i> Import (JSON)
+                <input type="file" accept=".json" onchange="importData(event)" style="display:none"/>
+              </label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </div><!-- /padding -->
   </div><!-- /main -->
 </div><!-- /adminPanel -->
@@ -281,34 +350,38 @@
 
 <script src="js/data.js"></script>
 <script>
-// ===== CONSTANTS =====
-const ADMIN_USER = 'admin';
-const ADMIN_PASS = 'admin123';
-const LS_KEY     = 'shofilm_movies';
+// ===== STORAGE KEYS =====
+const LS_KEY      = 'shofilm_movies';
+const LS_USER_KEY = 'shofilm_admin_user';
+const LS_PASS_KEY = 'shofilm_admin_pass';
 
-// ===== LOAD MOVIES (localStorage ustunlik) =====
+// Default login/parol (faqat birinchi marta)
+function getAdminCreds() {
+  return {
+    user: localStorage.getItem(LS_USER_KEY) || 'admin',
+    pass: localStorage.getItem(LS_PASS_KEY) || 'admin123'
+  };
+}
+
+// ===== LOAD MOVIES =====
 function getMovies() {
   const saved = localStorage.getItem(LS_KEY);
-  if (saved) {
-    try { return JSON.parse(saved); } catch(e) {}
-  }
-  // Birinchi marta: default MOVIES ni saqlash
+  if (saved) { try { return JSON.parse(saved); } catch(e) {} }
   localStorage.setItem(LS_KEY, JSON.stringify(MOVIES));
   return MOVIES;
 }
-function saveMovies(arr) {
-  localStorage.setItem(LS_KEY, JSON.stringify(arr));
-}
+function saveMovies(arr) { localStorage.setItem(LS_KEY, JSON.stringify(arr)); }
 
 // ===== LOGIN =====
 function doLogin() {
-  const u = document.getElementById('loginUser').value.trim();
-  const p = document.getElementById('loginPass').value;
+  const u     = document.getElementById('loginUser').value.trim();
+  const p     = document.getElementById('loginPass').value;
+  const creds = getAdminCreds();
   const errEl = document.getElementById('loginError');
-  if (u === ADMIN_USER && p === ADMIN_PASS) {
+  if (u === creds.user && p === creds.pass) {
     sessionStorage.setItem('adminLoggedIn', '1');
-    document.getElementById('loginScreen').style.display  = 'none';
-    document.getElementById('adminPanel').style.display   = 'block';
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminPanel').style.display  = 'block';
     initDashboard();
   } else {
     errEl.style.display = 'flex';
@@ -317,12 +390,35 @@ function doLogin() {
 }
 function doLogout() {
   sessionStorage.removeItem('adminLoggedIn');
-  document.getElementById('loginScreen').style.display  = 'flex';
-  document.getElementById('adminPanel').style.display   = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('adminPanel').style.display  = 'none';
+}
+
+// ===== PAROL O'ZGARTIRISH =====
+function changePassword() {
+  const oldPass  = document.getElementById('cp-old').value;
+  const newUser  = document.getElementById('cp-user').value.trim();
+  const newPass  = document.getElementById('cp-new').value;
+  const newPass2 = document.getElementById('cp-new2').value;
+  const creds    = getAdminCreds();
+
+  if (oldPass !== creds.pass) { showToast('❌ Eski parol noto\'g\'ri!', '#e50914'); return; }
+  if (!newUser)                { showToast('❌ Login bo\'sh bo\'lmasin!', '#e50914'); return; }
+  if (newPass.length < 4)      { showToast('❌ Parol kamida 4 ta belgidan iborat bo\'lsin!', '#e50914'); return; }
+  if (newPass !== newPass2)    { showToast('❌ Yangi parollar mos kelmadi!', '#e50914'); return; }
+
+  localStorage.setItem(LS_USER_KEY, newUser);
+  localStorage.setItem(LS_PASS_KEY, newPass);
+  document.getElementById('cp-old').value  = '';
+  document.getElementById('cp-new').value  = '';
+  document.getElementById('cp-new2').value = '';
+  showToast('✅ Login va parol muvaffaqiyatli o\'zgartirildi!');
 }
 
 // Auto-login check
 window.addEventListener('DOMContentLoaded', () => {
+  const creds = getAdminCreds();
+  document.getElementById('loginUser').placeholder = creds.user;
   if (sessionStorage.getItem('adminLoggedIn') === '1') {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('adminPanel').style.display  = 'block';
@@ -332,20 +428,28 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 // ===== NAVIGATION =====
-const pages = ['dashboard', 'movies', 'add'];
-const headings = { dashboard: 'Dashboard', movies: 'Filmlar boshqaruvi', add: 'Film qo\'shish' };
+const pages    = ['dashboard', 'movies', 'add', 'settings'];
+const headings = { dashboard:'Dashboard', movies:'Filmlar boshqaruvi', add:'Film qo\'shish', settings:'Sozlamalar' };
 
 function showPage(name) {
   pages.forEach(p => {
-    document.getElementById('page-' + p).style.display = p === name ? 'block' : 'none';
+    const el = document.getElementById('page-' + p);
+    if (el) el.style.display = p === name ? 'block' : 'none';
   });
   document.querySelectorAll('.sb-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.sb-btn')[pages.indexOf(name)].classList.add('active');
-  document.getElementById('pageHeading').textContent = headings[name];
+  const idx = pages.indexOf(name);
+  const btns = document.querySelectorAll('.sb-btn');
+  if (btns[idx]) btns[idx].classList.add('active');
+  document.getElementById('pageHeading').textContent = headings[name] || name;
 
   if (name === 'movies')    renderTable();
   if (name === 'dashboard') initDashboard();
-  if (name === 'add')       { clearForm(); document.getElementById('saveBtnText').textContent = 'Saqlash'; }
+  if (name === 'add')       { clearForm(); }
+  if (name === 'settings')  {
+    const c = getAdminCreds();
+    document.getElementById('cp-user').value = c.user;
+    document.getElementById('show-user').textContent = c.user;
+  }
 }
 </script>
 
@@ -532,7 +636,42 @@ function confirmDelete() {
   showToast('🗑️ Film o\'chirildi!', '#e50914');
 }
 
-// ===== TOAST =====
+// ===== EXPORT / IMPORT =====
+function exportData() {
+  const data = {
+    movies: getMovies(),
+    user: localStorage.getItem('shofilm_admin_user') || 'admin',
+    exportDate: new Date().toLocaleDateString('uz-UZ')
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(blob);
+  a.download = 'shofilm_backup_' + Date.now() + '.json';
+  a.click();
+  showToast('✅ Ma\'lumotlar eksport qilindi!');
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (data.movies && Array.isArray(data.movies)) {
+        saveMovies(data.movies);
+        showToast('✅ ' + data.movies.length + ' ta film yuklandi!');
+        initDashboard();
+      } else {
+        showToast('❌ Noto\'g\'ri fayl formati!', '#e50914');
+      }
+    } catch(err) {
+      showToast('❌ Fayl o\'qib bo\'lmadi!', '#e50914');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
 function showToast(msg, color = '#00b341') {
   const t  = document.getElementById('toast');
   const ic = t.querySelector('i');
