@@ -115,6 +115,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const topData = cat === 'all' ? [...movies].sort((a,b) => b.rating - a.rating): movies.filter(m => m.genre === cat || m.type === cat);
       renderGrid('newMoviesGrid', newData, 8);
       renderGrid('topMoviesGrid', topData, 8);
+      renderGrid('animeGrid',
+        cat === 'all'
+          ? movies.filter(m => m.type === 'anime')
+          : movies.filter(m => m.type === 'anime' && (m.genre === cat || m.type === cat)),
+        8);
     });
   });
 
@@ -197,4 +202,5 @@ document.addEventListener('DOMContentLoaded', () => {
   renderGrid('topMoviesGrid',  [...movies].sort((a,b) => b.rating - a.rating),8);
   renderGrid('serialsGrid',    movies.filter(m => m.type === 'serial'),        8);
   renderGrid('cartoonsGrid',   movies.filter(m => m.type === 'cartoon'),       8);
+  renderGrid('animeGrid',      movies.filter(m => m.type === 'anime'),         8);
 });

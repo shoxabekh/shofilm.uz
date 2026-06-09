@@ -13,11 +13,12 @@
   <div class="container header__inner">
     <a href="index.html" class="logo"><span class="logo-sho">Sho</span><span class="logo-film">Film</span><span class="logo-dot">.uz</span></a>
     <nav class="nav" id="nav">
-      <a href="index.html"   class="nav__link">Bosh sahifa</a>
-      <a href="movies.html"  class="nav__link">Filmlar</a>
-      <a href="serials.html" class="nav__link">Seriallar</a>
-      <a href="cartoons.html"class="nav__link">Multfilmlar</a>
-      <a href="top.html"     class="nav__link">Top 100</a>
+      <a href="index.html"    class="nav__link">Bosh sahifa</a>
+      <a href="movies.html"   class="nav__link">Filmlar</a>
+      <a href="serials.html"  class="nav__link">Seriallar</a>
+      <a href="cartoons.html" class="nav__link">Multfilmlar</a>
+      <a href="anime.html"    class="nav__link" style="color:#a855f7">⛩️ Anime</a>
+      <a href="top.html"      class="nav__link">Top 100</a>
     </nav>
     <div class="header__right">
       <button class="search-btn" id="searchToggle"><i class="fas fa-search"></i></button>
@@ -138,7 +139,7 @@
 <footer class="footer">
   <div class="container footer__inner">
     <div class="footer__logo"><a href="index.html" class="logo"><span class="logo-sho">Sho</span><span class="logo-film">Film</span><span class="logo-dot">.uz</span></a><p>O'zbekistondagi eng yaxshi film ko'rish platformasi</p></div>
-    <div class="footer__links"><h4>Bo'limlar</h4><a href="movies.html">Filmlar</a><a href="serials.html">Seriallar</a><a href="cartoons.html">Multfilmlar</a><a href="top.html">Top 100</a></div>
+    <div class="footer__links"><h4>Bo'limlar</h4><a href="movies.html">Filmlar</a><a href="serials.html">Seriallar</a><a href="cartoons.html">Multfilmlar</a><a href="anime.html">⛩️ Anime</a><a href="top.html">Top 100</a></div>
     <div class="footer__links"><h4>Ma'lumot</h4><a href="#">Biz haqimizda</a><a href="#">Bog'lanish</a></div>
     <div class="footer__social"><h4>Ijtimoiy tarmoqlar</h4><div class="social-icons"><a href="#"><i class="fab fa-telegram"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-youtube"></i></a></div></div>
   </div>
@@ -160,10 +161,16 @@ function getAllMovies() { return getMovies(); }
 function startPlayer() {
   if (!currentMovie) return;
   const container = document.getElementById('playerContainer');
-  const vid = currentMovie.videoId || '';
+  const vid  = currentMovie.videoId  || '';
+  const vtyp = currentMovie.videoType || 'youtube';
 
-  // Agar mp4 yoki bevosita video link bo'lsa
-  if (vid.startsWith('http') && (vid.includes('.mp4') || vid.includes('.m3u8') || vid.includes('.webm'))) {
+  // Embed kod (iframe)
+  if (vtyp === 'embed' && vid) {
+    container.innerHTML = vid;
+    return;
+  }
+  // MP4 / bevosita video
+  if (vtyp === 'mp4' && vid) {
     container.innerHTML = `
       <video controls autoplay style="width:100%;height:100%;background:#000">
         <source src="${vid}" type="video/mp4"/>
@@ -171,13 +178,15 @@ function startPlayer() {
       </video>`;
     return;
   }
-
-  // YouTube ID bo'lsa yoki default trailerlar
+  // YouTube (default)
   const defaultTrailers = {
     1:'TcMBFSGVi1c', 2:'zSWdZVtXT7E', 3:'EXeTwQWrcwY',
     4:'YoHD9XEInc0', 5:'JfVOs4VSpmA', 6:'zAGVQLHvwOY',
     7:'5xH0HfJHsaY', 8:'HhesaQXLuRY', 9:'bjqEWgDVPe0',
-    10:'7V-PNgHVBn4',11:'GibiNy4d4gc',12:'ue4h2J9iNWI'
+    10:'7V-PNgHVBn4',11:'GibiNy4d4gc',12:'ue4h2J9iNWI',
+    13:'MGRm4IzK1SQ',14:'rNcnBeFnHaw',15:'NlJZ1ZgkrBg',
+    16:'S8_YwFLCh4U',17:'VQGCKyvzIM4',18:'--IcmZkvL0Q',
+    19:'gFDFPL9CRNE',20:'vGuQeQsoRgU'
   };
   const ytId = vid || defaultTrailers[currentMovie.id] || 'dQw4w9WgXcQ';
   container.innerHTML = `

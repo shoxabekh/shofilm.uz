@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anime — ShoFilm.uz</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .anime-banner { padding-top:var(--hh); background:linear-gradient(135deg,#0a0015,#150030,#0d0d0d); min-height:220px; display:flex; align-items:center; border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
+    .anime-banner::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 30% 50%,rgba(120,40,255,.15) 0%,transparent 70%); }
+    .anime-banner h1 { font-size:clamp(24px,4vw,38px); font-weight:800; }
+    .anime-banner h1 span { color:#a855f7; }
+    .anime-banner p { color:var(--txt2); margin-top:8px; font-size:15px; }
+    .filter-tag { padding:7px 16px; border-radius:20px; font-size:13px; font-weight:500; background:var(--card); color:var(--txt2); border:1px solid var(--border); transition:var(--tr); cursor:pointer; }
+    .filter-tag:hover,.filter-tag.active { background:#7b2ff7; color:#fff; border-color:#7b2ff7; }
+  </style>
+</head>
+<body>
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="index.html" class="logo"><span class="logo-sho">Sho</span><span class="logo-film">Film</span><span class="logo-dot">.uz</span></a>
+    <nav class="nav" id="nav">
+      <a href="index.html"    class="nav__link">Bosh sahifa</a>
+      <a href="movies.html"   class="nav__link">Filmlar</a>
+      <a href="serials.html"  class="nav__link">Seriallar</a>
+      <a href="cartoons.html" class="nav__link">Multfilmlar</a>
+      <a href="anime.html"    class="nav__link active" style="color:#a855f7">⛩️ Anime</a>
+      <a href="top.html"      class="nav__link">Top 100</a>
+    </nav>
+    <div class="header__right">
+      <button class="search-btn" id="searchToggle"><i class="fas fa-search"></i></button>
+      <button class="btn-login"><i class="fas fa-user"></i> Kirish</button>
+      <button class="burger" id="burger"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+  <div class="search-bar" id="searchBar">
+    <div class="container">
+      <input type="text" id="searchInput" class="search-input" placeholder="Anime qidiring..."/>
+      <button class="search-close" id="searchClose"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</header>
+
+<section class="anime-banner">
+  <div class="container" style="position:relative;z-index:1">
+    <h1>⛩️ <span>Anime</span> bo'limi</h1>
+    <p>Eng mashhur yapon animatsiyalari — o'zbek va rus tilida</p>
+  </div>
+</section>
+
+<section style="background:var(--bg2);padding:18px 0;border-bottom:1px solid var(--border)">
+  <div class="container">
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="filter-tag active" data-genre="all">Barchasi</button>
+      <button class="filter-tag" data-genre="action">Боевик</button>
+      <button class="filter-tag" data-genre="fantasy">Fantastika</button>
+      <button class="filter-tag" data-genre="drama">Drama</button>
+      <button class="filter-tag" data-genre="comedy">Komediya</button>
+      <button class="filter-tag" data-genre="horror">Dahshat</button>
+    </div>
+  </div>
+</section>
+
+<section class="movies-page">
+  <div class="container">
+    <p class="movies-count" id="animeCount"></p>
+    <div class="movies-grid" id="animeGrid"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__logo"><a href="index.html" class="logo"><span class="logo-sho">Sho</span><span class="logo-film">Film</span><span class="logo-dot">.uz</span></a><p>O'zbekistondagi eng yaxshi film ko'rish platformasi</p></div>
+    <div class="footer__links"><h4>Bo'limlar</h4><a href="movies.html">Filmlar</a><a href="serials.html">Seriallar</a><a href="cartoons.html">Multfilmlar</a><a href="anime.html">Anime</a><a href="top.html">Top 100</a></div>
+    <div class="footer__links"><h4>Ma'lumot</h4><a href="#">Biz haqimizda</a><a href="#">Bog'lanish</a></div>
+    <div class="footer__social"><h4>Ijtimoiy tarmoqlar</h4><div class="social-icons"><a href="#"><i class="fab fa-telegram"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-youtube"></i></a></div></div>
+  </div>
+  <div class="footer__bottom"><p>© 2025 ShoFilm.uz — Barcha huquqlar himoyalangan</p></div>
+</footer>
+
+<div class="modal" id="movieModal">
+  <div class="modal__overlay" id="modalOverlay"></div>
+  <div class="modal__box">
+    <button class="modal__close" id="modalClose"><i class="fas fa-times"></i></button>
+    <div class="modal__poster"><img src="" alt="" id="modalPoster"/><div class="modal__play-btn"><a href="#" id="modalPlayLink" class="btn btn-primary btn-lg"><i class="fas fa-play"></i> Ko'rish</a></div></div>
+    <div class="modal__info"><h2 id="modalTitle"></h2><div class="modal__meta" id="modalMeta"></div><p id="modalDesc"></p>
+      <div class="modal__actions"><a href="#" id="modalWatchBtn" class="btn btn-primary"><i class="fas fa-play"></i> Ko'rish</a><button class="btn btn-icon"><i class="fas fa-heart"></i></button></div>
+    </div>
+  </div>
+</div>
+<button class="scroll-top" id="scrollTop"><i class="fas fa-chevron-up"></i></button>
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  let activeGenre = 'all';
+  function renderAnime() {
+    const grid  = document.getElementById('animeGrid');
+    const count = document.getElementById('animeCount');
+    let data = getMovies().filter(m => m.type === 'anime');
+    if (activeGenre !== 'all') data = data.filter(m => m.genre === activeGenre);
+    if (count) count.textContent = `Jami ${data.length} ta anime`;
+    grid.innerHTML = '';
+    if (!data.length) {
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--muted)">
+        <div style="font-size:60px;margin-bottom:16px">⛩️</div>
+        <h3 style="margin-bottom:8px;color:var(--txt2)">Hozircha anime yo'q</h3>
+        <p style="font-size:14px">Admin paneldan anime qo'shing → <a href="admin.html" style="color:#a855f7">admin.html</a></p>
+      </div>`;
+      return;
+    }
+    data.forEach(m => grid.appendChild(buildCard(m)));
+  }
+  document.querySelectorAll('.filter-tag').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.filter-tag').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      activeGenre = this.dataset.genre;
+      renderAnime();
+    });
+  });
+  renderAnime();
+});
+</script>
+</body>
+</html>
